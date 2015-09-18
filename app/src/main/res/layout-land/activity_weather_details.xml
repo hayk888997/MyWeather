@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WeatherDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtViewCityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CityName"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/txtViewWeatherDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="rain"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtViewTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="13°"
+                android:textSize="28sp" />
+
+
+            <TextView
+                android:id="@+id/txtViewSunrise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Sunrise"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtViewSunset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dip"
+                android:text="Sunset"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtViewClouds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="clouds"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtViewRain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dip"
+                android:text="Rain"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtViewHumidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Humidity"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtViewPressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Pressure"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1.8"
+            android:gravity="center_vertical|right"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/listViewDailyWeather"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtViewTemp"
+                android:divider="@color/material_blue_grey_900"
+                android:dividerHeight="1dip">
+
+            </ListView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
