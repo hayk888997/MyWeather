@@ -1,8 +1,7 @@
 package com.french.egs.haykn.myweather;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,14 +9,13 @@ import android.widget.Toast;
 import com.french.egs.haykn.myweather.adapters.ListViewDailyWeatherAdapter;
 import com.french.egs.haykn.myweather.api.ApiClient;
 import com.french.egs.haykn.myweather.api.ApiManager;
-import com.french.egs.haykn.myweather.api.model.CityDetails;
-import com.french.egs.haykn.myweather.api.model.DailyWeatherDetails;
+import com.french.egs.haykn.myweather.model.CityDetailsModel;
+import com.french.egs.haykn.myweather.model.DailyWeatherDetails;
 import com.french.egs.haykn.myweather.utils.Constants;
 import com.french.egs.haykn.myweather.utils.Util;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit.Callback;
@@ -25,10 +23,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class WeatherDetailsActivity extends Activity {
+public class WeatherDetailsActivity extends AppCompatActivity {
 
-    private CityDetails cityDetails;
-    private ApiClient client = ApiManager.getWeatherClient();
+    private CityDetailsModel cityDetailsModel;
+    private final ApiClient client = ApiManager.getWeatherClient();
 
     private ListViewDailyWeatherAdapter adapter;
     private List<DailyWeatherDetails.ListItem> listOfDailyWeathers;
@@ -41,28 +39,30 @@ public class WeatherDetailsActivity extends Activity {
         listOfDailyWeathers = new ArrayList<>();
 
         ListView listView = (ListView) findViewById(R.id.listViewDailyWeather);
+
         adapter = new ListViewDailyWeatherAdapter(WeatherDetailsActivity.this, listOfDailyWeathers);
         listView.setAdapter(adapter);
-
-        getData();
+        //Refresh data every time when calls activities onCreate() method (device rotation included of course). I kept it cause didn't know what will be better for you :)
+        getWeatherData();
     }
 
-    private void getData() {
-        client.getWeatherByCityName(Constants.CITY_NAME, new Callback<CityDetails>() {
+
+    private void getWeatherData() {
+        client.getWeatherByCityName(Constants.CITY_NAME, new Callback<CityDetailsModel>() {
             @Override
-            public void success(CityDetails weather, Response response) {
-                cityDetails = weather;
+            public void success(CityDetailsModel weather, Response response) {
+                cityDetailsModel = weather;
                 setData();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 String message = error.getMessage();
-                Toast.makeText(WeatherDetailsActivity.this, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(WeatherDetailsActivity.this, message, Toast.LENGTH_LONG).show(); //TODO:Can be ToastManager in the future
             }
         });
 
-        client.getDailyWeather(Constants.CITY_NAME, Constants.daysCountForWeather, new Callback<DailyWeatherDetails>() {
+        client.getDailyWeather(Constants.CITY_NAME, Constants.DAYS_COUNT_FOR_GETTING_WEATHER, new Callback<DailyWeatherDetails>() {
             @Override
             public void success(DailyWeatherDetails dailyWeatherDet, Response response) {
                 listOfDailyWeathers.clear();
@@ -79,56 +79,27 @@ public class WeatherDetailsActivity extends Activity {
     }
 
     private void setData() {
+        try {
 
-        ((TextView)findViewById(R.id.txtViewCityName)).setText(Constants.CITY_NAME);
-        ((TextView)findViewById(R.id.txtViewWeatherDescription)).setText(cityDetails.getWeatherList().get(0).getDescription());
-        ((TextView)findViewById(R.id.txtViewTemp)).setText(String.valueOf(new DecimalFormat("##.##").format((Util.fahrenheitToCelsius(cityDetails.getMain().getTemp())))));
+            //Initializing views
+            ((TextView) findViewById(R.id.txtViewCityName)).setText(Constants.CITY_NAME);
+            ((TextView) findViewById(R.id.txtViewWeatherDescription)).setText(cityDetailsModel.getWeatherList().get(0).getDescription());
+            ((TextView) findViewById(R.id.txtViewTemp)).setText(String.valueOf(new DecimalFormat("##.##").format((Util.fahrenheitToCelsius(cityDetailsModel.getMain().getTemp())))));
 
-        ((TextView)findViewById(R.id.txtViewSunrise)).setText(getString(R.string.sunrise) + milsToHour(cityDetails.getSys().getSunrise()));
-        ((TextView)findViewById(R.id.txtViewSunset)).setText(getString(R.string.sunset) + milsToHour(cityDetails.getSys().getSunset()));
+            ((TextView) findViewById(R.id.txtViewSunrise)).setText(getString(R.string.sunrise) + Util.milsToHour(cityDetailsModel.getSys().getSunrise()));
+            ((TextView) findViewById(R.id.txtViewSunset)).setText(getString(R.string.sunset) + Util.milsToHour(cityDetailsModel.getSys().getSunset()));
 
-        ((TextView)findViewById(R.id.txtViewClouds)).setText(getString(R.string.clouds) + cityDetails.getClouds().getCloudePersantage());
+            ((TextView) findViewById(R.id.txtViewClouds)).setText(getString(R.string.clouds) + cityDetailsModel.getClouds().getCloudPercentage());
 
-        if(cityDetails.getRain() != null) {
-            ((TextView)findViewById(R.id.txtViewRain)).setText(getString(R.string.rain) + cityDetails.getRain().getRain());
-        } else {
-            ((TextView)findViewById(R.id.txtViewRain)).setText(getString(R.string.rain) + getString(R.string.no_info));
+            if (cityDetailsModel.getRain() != null) {
+                ((TextView) findViewById(R.id.txtViewRain)).setText(getString(R.string.rain) + cityDetailsModel.getRain().getRainInfoInMM());
+            } else {
+                ((TextView) findViewById(R.id.txtViewRain)).setText(getString(R.string.rain) + getString(R.string.no_info));
+            }
+            ((TextView) findViewById(R.id.txtViewHumidity)).setText(getString(R.string.humidity) + cityDetailsModel.getMain().getHumidity());
+            ((TextView) findViewById(R.id.txtViewPressure)).setText(getString(R.string.pressure) + cityDetailsModel.getMain().getPressure());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        ((TextView)findViewById(R.id.txtViewHumidity)).setText(getString(R.string.humidity) + cityDetails.getMain().getHumidity());
-        ((TextView)findViewById(R.id.txtViewPressure)).setText(getString(R.string.pressure) + cityDetails.getMain().getPressure());
-
-
-
-
-
-
-    }
-
-    String milsToHour(long mils) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(mils);
-        String am_pm;
-        int hour = calendar.get(Calendar.HOUR);
-        int minute = calendar.get(Calendar.MINUTE);
-        if(calendar.get(Calendar.AM_PM) == 0) {
-            am_pm = "AM";
-        } else {
-            am_pm = "PM";
-        }
-        String time= hour + ":" + minute + " " + am_pm;
-        return time;
-
-    }
-
-
-    public void onClick(View view) {
-
-
-    }
-
-    public void onClick2(View view) {
-        ApiClient client = ApiManager.getWeatherClient();
-
-
     }
 }

@@ -9,8 +9,6 @@
     <string name="rain">Rain:</string>
     <string name="humidity">Humidity:</string>
     <string name="pressure">Pressure:</string>
-    <string name="am">AM</string>
-    <string name="pm">PM</string>
     <string name="title">MyWeather</string>
     <string name="no_info">No Info</string>
 </resources>

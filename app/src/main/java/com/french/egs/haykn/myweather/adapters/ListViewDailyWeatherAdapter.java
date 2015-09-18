@@ -12,22 +12,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.french.egs.haykn.myweather.R;
-import com.french.egs.haykn.myweather.api.model.DailyWeatherDetails;
+import com.french.egs.haykn.myweather.model.DailyWeatherDetails;
 import com.french.egs.haykn.myweather.utils.Util;
 
-import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 
-
 public class ListViewDailyWeatherAdapter extends BaseAdapter {
-    private Context mContext;
-    private List<DailyWeatherDetails.ListItem> mData;
+    private final Context mContext;
+    private final List<DailyWeatherDetails.ListItem> mData;
 
     public ListViewDailyWeatherAdapter(Context context, List<DailyWeatherDetails.ListItem> data){ //TODO: change the names
         mContext = context;
@@ -64,24 +58,12 @@ public class ListViewDailyWeatherAdapter extends BaseAdapter {
         }
         DailyWeatherDetails.ListItem item = mData.get(position);
 
-        TextView dayName = (TextView) convertView.findViewById(R.id.textViewDayName);
 
-//        Date date = new Date(item.getDate());
-//        SimpleDateFormat simpleDateformat = new SimpleDateFormat("E"); // the day of the week abbreviated
-//        dayName.setText(String.valueOf(simpleDateformat.format(date)));
+        ((TextView) convertView.findViewById(R.id.textViewDayName)).setText(Util.getWeekShortDay(item.getDate()));
 
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(new Date(item.getDate()));
-        int dow = cal.get(Calendar.DAY_OF_WEEK);
-
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] weekdays = dfs.getShortWeekdays();
-        dayName.setText(weekdays[dow]);
-        System.out.println(weekdays[dow]);
-
-
-        TextView temperatureFrom = (TextView) convertView.findViewById(R.id.textViewTemperatureFrom);
-        temperatureFrom.setText(String.valueOf(new DecimalFormat("##.##").format((Util.fahrenheitToCelsius(item.getTemp().getDay())))));
+        ((TextView) convertView.findViewById(R.id.textViewTemperatureFrom)).
+                setText(String.valueOf(new DecimalFormat("##.##").format
+                        ((Util.fahrenheitToCelsius(item.getTemp().getDayTemp())))));
 
         TextView temperatureTo = (TextView) convertView.findViewById(R.id.textViewTemperatureTo);
         temperatureTo.setText(String.valueOf (new DecimalFormat("##.##").format((item.getTemp().getNight()))));

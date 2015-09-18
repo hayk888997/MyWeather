@@ -1,4 +1,4 @@
-package com.french.egs.haykn.myweather.api.model;
+package com.french.egs.haykn.myweather.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -25,9 +25,6 @@ public class DailyWeatherDetails {
         this.itemList = itemList;
     }
 
-
-
-
     public class ListItem {
 
         @SerializedName("dt")
@@ -52,16 +49,18 @@ public class DailyWeatherDetails {
         }
 
         public class Temp {
-            private double day;
+
+            @SerializedName("day")
+            private double dayTemp;
             private double night;
 
 
-            public double getDay() {
-                return day;
+            public double getDayTemp() {
+                return dayTemp;
             }
 
-            public void setDay(double day) {
-                this.day = day;
+            public void setDayTemp(double dayTemp) {
+                this.dayTemp = dayTemp;
             }
 
             public double getNight() {
@@ -73,7 +72,4 @@ public class DailyWeatherDetails {
             }
         }
     }
-
-
-
 }

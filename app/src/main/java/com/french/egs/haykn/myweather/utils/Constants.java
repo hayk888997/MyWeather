@@ -6,6 +6,6 @@ package com.french.egs.haykn.myweather.utils;
 public class Constants {
     public static final String BASE_URL = "http://api.openweathermap.org/data/2.5";
     public static final String CITY_NAME = "Lyon";
-    public static final int daysCountForWeather = 7;
+    public static final int DAYS_COUNT_FOR_GETTING_WEATHER = 7;
 
 }

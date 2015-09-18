@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="0dip"
@@ -23,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="CityName"
                 android:textSize="22sp" />
 
             <TextView
@@ -31,7 +31,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="rain"
                 android:textSize="18sp" />
 
             <TextView
@@ -39,7 +38,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="13°"
                 android:textSize="28sp" />
 
 
@@ -48,7 +46,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Sunrise"
                 android:textSize="18sp" />
 
             <TextView
@@ -57,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dip"
-                android:text="Sunset"
                 android:textSize="18sp" />
 
             <TextView
@@ -65,7 +61,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="clouds"
                 android:textSize="18sp" />
 
             <TextView
@@ -74,7 +69,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dip"
-                android:text="Rain"
                 android:textSize="18sp" />
 
             <TextView
@@ -82,7 +76,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Humidity"
                 android:textSize="18sp" />
 
             <TextView
@@ -90,29 +83,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Pressure"
                 android:textSize="18sp" />
         </LinearLayout>
 
 
-        <LinearLayout
+
+        <ListView
+            android:id="@+id/listViewDailyWeather"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1.8"
             android:gravity="center_vertical|right"
-            android:orientation="vertical">
+            android:layout_below="@+id/txtViewTemp"
+            android:divider="@color/material_blue_grey_900"
+            android:dividerHeight="1dip">
 
-            <ListView
-                android:id="@+id/listViewDailyWeather"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtViewTemp"
-                android:divider="@color/material_blue_grey_900"
-                android:dividerHeight="1dip">
+        </ListView>
 
-            </ListView>
 
-        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

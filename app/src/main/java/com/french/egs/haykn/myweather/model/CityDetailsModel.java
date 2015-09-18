@@ -1,4 +1,4 @@
-package com.french.egs.haykn.myweather.api.model;
+package com.french.egs.haykn.myweather.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,13 +7,14 @@ import java.util.List;
 /**
  * Created by haykn on 9/18/15.
  */
-public class CityDetails {
+public class CityDetailsModel {
 
     private Sys sys;
+
     @SerializedName("weather")
     private List<Weather> weatherList;
+
     private Main main;
-//    private String name;
     private Rain rain;
     private Cloud clouds;
 
@@ -32,14 +33,6 @@ public class CityDetails {
     public void setMain(Main main) {
         this.main = main;
     }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
 
     public Rain getRain() {
         return rain;
@@ -67,14 +60,14 @@ public class CityDetails {
 
     public class Rain {
         @SerializedName("1h")
-        private double rain;
+        private double rainInfoInMM;
 
-        public double getRain() {
-            return rain;
+        public double getRainInfoInMM() {
+            return rainInfoInMM;
         }
 
-        public void setRain(double rain) {
-            this.rain = rain;
+        public void setRainInfoInMM(double rainInfoInMM) {
+            this.rainInfoInMM = rainInfoInMM;
         }
     }
 
@@ -90,7 +83,6 @@ public class CityDetails {
         }
 
     }
-
 
     public class Main {
 
@@ -122,8 +114,6 @@ public class CityDetails {
             this.temp = temp;
         }
 
-
-
     }
 
     public class Sys {
@@ -152,16 +142,12 @@ public class CityDetails {
         @SerializedName("all")
         private double cloudPercentage;
 
-        public double getCloudePersantage() {
+        public double getCloudPercentage() {
             return cloudPercentage;
         }
 
-        public void setCloudePersantage(double cloudePersantage) {
+        public void setCloudPersantage(double cloudePersantage) {
             this.cloudPercentage = cloudePersantage;
         }
-
     }
-
-
-
 }
